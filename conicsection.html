@@ -5,42 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>เครื่องคำนวณสมการวงกลม</title>
 
-  <!-- ✅ Facebook Preview -->
+  <!-- Facebook preview -->
   <meta property="og:title" content="เครื่องคำนวณสมการวงกลม">
-  <meta property="og:description" content="คำนวณสมการวงกลมจากสมการ จุดศูนย์กลาง หรือเส้นผ่านศูนย์กลางได้ทันที">
+  <meta property="og:description" content="เครื่องคำนวณสมการวงกลมออนไลน์ พร้อมสูตรคำนวณอัตโนมัติ">
   <meta property="og:image" content="https://raw.githubusercontent.com/anuchitNRRU/images/main/banner.jpg">
-  <meta property="og:type" content="website">
   <meta property="og:url" content="https://anuchitNRRU.github.io/conicsection.html">
+  <meta property="og:type" content="website">
 
   <style>
     body {
       display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      height: 100vh; background: #f8f9fa; margin: 0;
+      justify-content: center; align-items: center;
+      min-height: 100vh; margin: 0;
+      background: #f8f9fa; color: #4a4e69;
       font-family: 'IBM Plex Sans Thai', sans-serif;
-      color: #4a4e69;
     }
     .spinner {
-      width: 70px; height: 70px;
       border: 6px solid #ddd;
       border-top: 6px solid #6f42c1;
       border-radius: 50%;
+      width: 70px; height: 70px;
       animation: spin 1s linear infinite;
     }
-    @keyframes spin { 0% { transform: rotate(0); } 100% { transform: rotate(360deg); } }
-    .text { margin-top: 20px; font-size: 1.2rem; }
+    @keyframes spin { 0%{transform:rotate(0)} 100%{transform:rotate(360deg)} }
+    .text { margin-top: 20px; font-size: 1.1rem; text-align: center; }
+    .btn {
+      margin-top: 20px; background: #6f42c1; color: white;
+      padding: 10px 20px; border-radius: 8px;
+      text-decoration: none; font-weight: bold;
+      transition: background 0.3s;
+    }
+    .btn:hover { background: #56329e; }
   </style>
 </head>
-
 <body>
   <div class="spinner"></div>
   <div class="text">กำลังเปิดเครื่องคำนวณสมการวงกลม...</div>
+  <a id="openBtn" href="#" class="btn" style="display:none;">แตะที่นี่เพื่อเปิดใน Safari</a>
 
   <script>
-    // 🟣 ใช้ replace() แทน href เพื่อให้ Facebook ไม่ตาม redirect
-    setTimeout(() => {
-      window.location.replace("https://script.google.com/macros/s/AKfycbxHE9Xcka_H9V4F9lcM1aqL2wVn6mnBrPQ8lXvDlq4820Ne_5rGrbosp28k6mDNbDldIQ/exec");
-    }, 2000);
+    const gasURL = "https://script.google.com/macros/s/AKfycbxHE9Xcka_H9V4F9lcM1aqL2wVn6mnBrPQ8lXvDlq4820Ne_5rGrbosp28k6mDNbDldIQ/exec";
+
+    // ตรวจว่าผู้ใช้เปิดใน iOS Facebook App หรือไม่
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    const isIOS = /iPad|iPhone|iPod/.test(ua);
+    const isFB = ua.includes("FBAN") || ua.includes("FBAV");
+
+    if (isIOS && isFB) {
+      // ถ้าเป็น iOS Facebook App → แสดงปุ่มให้กดแทน redirect
+      document.querySelector(".spinner").style.display = "none";
+      document.querySelector(".text").textContent = "แตะปุ่มด้านล่างเพื่อเปิดใน Safari";
+      document.getElementById("openBtn").href = gasURL;
+      document.getElementById("openBtn").style.display = "inline-block";
+    } else {
+      // ปกติ redirect อัตโนมัติ (Android หรือ Browser ปกติ)
+      setTimeout(() => window.location.replace(gasURL), 1500);
+    }
   </script>
 </body>
 </html>
